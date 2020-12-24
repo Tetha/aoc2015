@@ -1,3 +1,27 @@
-fn main() {
-    println!("Hello, world!");
+use std::env;
+use std::num::ParseIntError;
+
+mod day2;
+
+fn main() -> Result<(), AdventError> {
+    let args: Vec<String> = env::args().collect();
+
+    match &args[1] as &str {
+        "day2_part1" => day2::part1(),
+        _ => {
+            println!("Unknown argument {}", args[0]);
+            Ok(())
+        }
+    }
+}
+
+#[derive(Debug)]
+pub struct AdventError {
+    pub cause: String,
+}
+
+impl From<ParseIntError> for AdventError {
+    fn from(src: ParseIntError) -> Self {
+        AdventError{cause: src.to_string()}
+    }
 }
