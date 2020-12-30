@@ -3,6 +3,7 @@ use std::num::ParseIntError;
 
 mod day2;
 mod day3;
+mod day4;
 
 fn main() -> Result<(), AdventError> {
     let args: Vec<String> = env::args().collect();
@@ -11,6 +12,8 @@ fn main() -> Result<(), AdventError> {
         "day2_part1" => day2::part1(),
         "day3_part1" => day3::part1(),
         "day3_part2" => day3::part2(),
+        "day4_test" => day4::test(),
+        "day4_part1" => day4::part1(),
         _ => {
             println!("Unknown argument {}", args[0]);
             Ok(())
