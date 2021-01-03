@@ -13,6 +13,7 @@ pub fn part1() -> Result<(), AdventError> {
         //println!("{} lights are on", grid.count_lights());
     }
     println!("{} lights are on", grid.count_lights());
+    println!("brightness: {}", grid.total_brightness());
     Ok(())
 }
 struct InstructionDecoder {
@@ -36,20 +37,24 @@ enum Command {
 }
 
 struct LightGrid {
-    lights: Vec<bool>,
+    lights: Vec<u32>,
     width: usize,
 }
 
 impl LightGrid {
     fn new(width: usize, height: usize) -> LightGrid {
         LightGrid{
-            lights: vec![false; width * height],
+            lights: vec![0; width * height],
             width,
         }
     }
 
     fn count_lights(&self) -> usize {
-        self.lights.iter().filter(|&l| *l ).count()
+        self.lights.iter().filter(|&l| *l > 0 ).count()
+    }
+
+    fn total_brightness(&self) -> u32 {
+        self.lights.iter().copied().sum()
     }
 
     fn execute(&mut self, instruction: Instruction) {
@@ -64,16 +69,17 @@ impl LightGrid {
         }
     }
     fn toggle(&mut self, x: usize, y: usize) {
-        let old_state = self.lights[x + y * self.width];
-        self.lights[x + y * self.width] = !old_state;
+        self.lights[x + y * self.width] += 2;
     }
 
     fn turn_off(&mut self, x: usize, y: usize) {
-        self.lights[x + y * self.width] = false;
+        if self.lights[x + y * self.width] >= 1 {
+            self.lights[x + y * self.width] -= 1;
+        }
     }
 
     fn turn_on(&mut self, x: usize, y: usize) {
-        self.lights[x + y * self.width] = true;
+        self.lights[x + y * self.width] += 1;
     }
 }
 
