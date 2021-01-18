@@ -13,6 +13,7 @@ mod day10;
 mod day11;
 mod day12;
 mod day13;
+mod day14;
 
 fn main() -> Result<(), AdventError> {
     let args: Vec<String> = env::args().collect();
@@ -35,6 +36,8 @@ fn main() -> Result<(), AdventError> {
         "day12_part1" => day12::part1(),
         "day13_test" => day13::test(),
         "day13_part1" => day13::part1(),
+        "day14_part1" => day14::part1(),
+        "day14_part2" => day14::part2(),
         _ => {
             println!("Unknown argument {}", args[0]);
             Ok(())
